@@ -31,3 +31,7 @@ export const getSessionStatus = async (req: Request, res: Response) => {
     customer_email: session.customer_details.email,
   });
 };
+
+export const getTestLog = async (req: Request, res: Response) => {
+  console.log("test log");
+};
