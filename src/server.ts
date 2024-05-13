@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -10,5 +9,5 @@ app.use(cors());
 app.post("/create-checkout-session", createCheckoutSession);
 app.get("/session-status", getSessionStatus);
 
-const PORT = process.env.PORT || 4242;
+const PORT = 4242;
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
