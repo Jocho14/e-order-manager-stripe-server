@@ -23,4 +23,4 @@ jobs:
         with:
           app-name: e-order-manager-stripe-server
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ./dist
+          package: .
