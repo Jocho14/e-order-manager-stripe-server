@@ -1,11 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const {
-  createCheckoutSession,
-  getSessionStatus,
-  getTestLog,
-} = require("./session");
+import { createCheckoutSession, getSessionStatus, getTestLog } from "./session";
 
 app.use(express.static("public"));
 app.use(cors());
