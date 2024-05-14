@@ -8,7 +8,12 @@ const {
 } = require("./session");
 
 app.use(express.static("public"));
-app.use(cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.post("/create-checkout-session", createCheckoutSession);
 app.get("/session-status", getSessionStatus);
