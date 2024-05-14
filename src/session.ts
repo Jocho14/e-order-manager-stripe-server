@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 const DOMAIN = "http://localhost:5173";
 
-export const createCheckoutSession = async (req: Request, res: Response) => {
+const createCheckoutSession = async (req: Request, res: Response) => {
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: [
@@ -22,8 +22,9 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
 
   res.send({ clientSecret: session.client_secret });
 };
+exports.createCheckoutSession = createCheckoutSession;
 
-export const getSessionStatus = async (req: Request, res: Response) => {
+const getSessionStatus = async (req: Request, res: Response) => {
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
 
   res.send({
@@ -31,7 +32,9 @@ export const getSessionStatus = async (req: Request, res: Response) => {
     customer_email: session.customer_details.email,
   });
 };
+exports.getSessionStatus = getSessionStatus;
 
-export const getTestLog = async (req: Request, res: Response) => {
+const getTestLog = async (req: Request, res: Response) => {
   res.send({ id: 1, name: "test" });
 };
+exports.getTestLog = getTestLog;
