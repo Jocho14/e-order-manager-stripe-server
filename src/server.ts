@@ -10,15 +10,7 @@ const {
 } = require("./session");
 
 app.use((req: any, res: any, next: any) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
