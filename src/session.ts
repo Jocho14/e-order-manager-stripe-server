@@ -33,5 +33,5 @@ export const getSessionStatus = async (req: Request, res: Response) => {
 };
 
 export const getTestLog = async (req: Request, res: Response) => {
-  console.log("test log");
+  res.send({ id: 1, name: "test" });
 };
