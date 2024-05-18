@@ -7,15 +7,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 const DOMAIN = "http://localhost:5173";
 
+const { createLineItems } = require("./product");
+
 const createCheckoutSession = async (req: Request, res: Response) => {
+  console.log("products: ", req.body.products);
+  const lineItems = await createLineItems(req.body.products);
+
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
-    line_items: [
-      {
-        price: "price_1PEJCEGMVCMC9JftHXtXziDr",
-        quantity: 1,
-      },
-    ],
+    line_items: lineItems,
     mode: "payment",
     return_url: `${DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
   });

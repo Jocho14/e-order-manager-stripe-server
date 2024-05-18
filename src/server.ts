@@ -1,12 +1,11 @@
-import { NextFunction } from "express";
-
 const express = require("express");
 const app = express();
 const cors = require("cors");
+app.use(express.json());
 app.use(express.static("public"));
 
 app.use((req: any, res: any, next: any) => {
-  res.header("Access-Control-Allow-Origin", "*"); // allows requests from all origins
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -18,6 +17,13 @@ app.use((req: any, res: any, next: any) => {
   next();
 });
 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 const {
   createCheckoutSession,
   getSessionStatus,
@@ -28,5 +34,5 @@ app.post("/create-checkout-session", createCheckoutSession);
 app.get("/session-status", getSessionStatus);
 app.get("/test-log", getTestLog);
 
-const PORT = 8080;
+const PORT = 4242;
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
