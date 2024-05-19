@@ -5,14 +5,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
 });
 
-// const DOMAIN = "http://localhost:5173";
-const DOMAIN = "https://master--e-order-manager.netlify.app";
+const DOMAIN = "http://localhost:5173";
+//const DOMAIN = "https://master--e-order-manager.netlify.app";
 
 const { createLineItems } = require("./product");
 
 const createCheckoutSession = async (req: Request, res: Response) => {
-  console.log("products: ", req.body.products);
-  const lineItems = await createLineItems(req.body.products);
+  const lineItems = createLineItems(req.body.products);
 
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",

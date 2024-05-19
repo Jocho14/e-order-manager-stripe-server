@@ -3,54 +3,39 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
 });
 
-interface Product {
-  id: number;
-  price: number;
-  image: string;
+const CURRENCY = "pln";
+const QUANTITY = 1;
+
+interface ProductDataProps {
+  imageUrl: string[];
   name: string;
 }
 
-const createPrice = async (productId: string, amount: number) => {
-  return await stripe.prices.create({
-    product: productId,
-    currency: "pln",
-    unit_amount: amount * 100,
-  });
+interface PriceDataProps {
+  price: number;
+  currency: string;
+}
+
+interface ProductProps extends ProductDataProps, PriceDataProps {
+  quantity: number;
+}
+
+const createLineItem = (product: ProductProps) => {
+  return {
+    price_data: {
+      currency: CURRENCY,
+      product_data: {
+        name: product.name,
+        images: [product.imageUrl],
+      },
+      unit_amount: product.price * 100, // unit_amount in fractional currency
+    },
+    quantity: QUANTITY,
+  };
 };
 
-const createProduct = async (product: Product) => {
-  try {
-    const stripeProduct = await stripe.products.create({
-      name: product.name,
-      images: [product.image],
-    });
-
-    const price = await createPrice(stripeProduct.id, product.price);
-
-    return {
-      stripeProduct,
-      price,
-    };
-  } catch (error) {
-    console.error("Error creating product and price:", error);
-    throw error;
-  }
+const createLineItems = (products: ProductProps[]) => {
+  products.forEach((product) => console.log(product));
+  return products.map(createLineItem);
 };
-
-const createLineItems = async (products: Product[]): Promise<any[]> => {
-  const lineItems = [];
-  for (const product of products) {
-    try {
-      const { stripeProduct, price } = await createProduct(product);
-      lineItems.push({
-        price: price.id,
-        quantity: 1,
-      });
-    } catch (error) {
-      console.error("Error processing product:", product.name, error);
-    }
-  }
-  return lineItems;
-};
-
 exports.createLineItems = createLineItems;
