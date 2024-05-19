@@ -5,8 +5,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27",
 });
 
-const DOMAIN = "http://localhost:5173";
-//const DOMAIN = "https://master--e-order-manager.netlify.app";
+//const DOMAIN = "http://localhost:5173";
+const DOMAIN = "https://master--e-order-manager.netlify.app";
 
 const { createLineItems } = require("./product");
 
