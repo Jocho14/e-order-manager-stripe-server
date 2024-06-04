@@ -7,8 +7,9 @@ const CURRENCY = "pln";
 const QUANTITY = 1;
 
 interface ProductDataProps {
-  imageUrl: string[];
-  name: string;
+  id: number;
+  image: string;
+  title: string;
 }
 
 interface PriceDataProps {
@@ -25,8 +26,11 @@ const createLineItem = (product: ProductProps) => {
     price_data: {
       currency: CURRENCY,
       product_data: {
-        name: product.name,
-        images: [product.imageUrl],
+        name: product.title,
+        images: [product.image],
+        metadata: {
+          database_id: product.id,
+        },
       },
       unit_amount: product.price * 100, // unit_amount in fractional currency
     },
